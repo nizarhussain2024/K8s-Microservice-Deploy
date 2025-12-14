@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nizar-sample-app-sa
+  namespace: default
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: nizar-sample-app-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch", "update"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: nizar-sample-app-rolebinding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: nizar-sample-app-sa
+  namespace: default
+roleRef:
+  kind: Role
+  name: nizar-sample-app-role
+  apiGroup: rbac.authorization.k8s.io
+
