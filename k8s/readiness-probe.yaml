@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: readiness-config
+  namespace: default
+data:
+  readiness.sh: |
+    #!/bin/sh
+    # Custom readiness check script
+    if [ -f /tmp/ready ]; then
+      exit 0
+    else
+      exit 1
+    fi
+
